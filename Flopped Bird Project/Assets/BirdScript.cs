@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BirdScript : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class BirdScript : MonoBehaviour
     public LogicScript logic;
     public bool isAlive = true;
     CircleCollider2D birdCollider;
+
+    public GameObject WingUp;
+    public GameObject WingDown;
 
     private Vector3 ogScale;
 
@@ -19,6 +23,8 @@ public class BirdScript : MonoBehaviour
         birdCollider = GetComponent<CircleCollider2D>();
         birdCollider.isTrigger = false;
         ogScale = transform.localScale;
+        
+
     }
 
     // Update is called once per frame
@@ -27,6 +33,13 @@ public class BirdScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) == true && isAlive)
         {
             BirdRigidBody.velocity = Vector2.up * flapPower;
+            WingUp.SetActive(true);
+            WingDown.SetActive(false);
+        }
+        else if (!(Input.GetKey(KeyCode.Space)))
+        {
+            WingUp.SetActive(false);
+            WingDown.SetActive(true);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
